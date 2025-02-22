@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e  # Exit on any error
 
 # Check if PLAYIT_SECRET is set
@@ -25,4 +25,4 @@ chmod +x playit-linux-amd64
 
 # Run the Playit agent with the secret key
 echo "Starting Playit agent..."
-exec ./playit-linux-amd64 --platform_linux --secret "$PLAYIT_SECRET"
+exec ./playit-linux-amd64 --platform_docker --secret "$PLAYIT_SECRET"
