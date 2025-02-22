@@ -15,18 +15,28 @@ ORIGIN="https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}
 # Archive the worlds into worlds.zip
 zip -r worlds.zip "$OVERWORLD" "$NETHER" "$END"
 
+# Clone or update the repository
+if [ ! -d "backup-repo/.git" ]; then
+    git clone "$ORIGIN" backup-repo
+else
+    cd backup-repo || exit 1
+    git pull origin main
+    cd ..
+fi
+
+# Move the backup to the repo folder
+mv worlds.zip backup-repo/
+
+# Navigate to the repo directory
+cd backup-repo || exit 1
+
 # Configure Git
 git config --global user.email "backup-bot@server.com"
 git config --global user.name "Backup Bot"
 
-# Initialize repo if not already
-git init
-git remote add origin "$ORIGIN" 2>/dev/null || git remote set-url origin "$ORIGIN"
-
 # Add and commit the backup
 git add worlds.zip
-git commit -m "Automated backup: $(date '+%Y-%m-%d %H:%M:%S')"
+git commit -m "Automated backup: $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit."
 
 # Push to the repository
-git branch -M main
-git push -u origin main
+git push origin main
