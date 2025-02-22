@@ -62,7 +62,7 @@ fetch_latest_geyser_github() {
 }
 
 # Example usage with multiple projects and loaders
-projects=("simple-voice-chat" "worldedit" "chunky" "bluemap" "luckperms" "packstacker" "knockbacksync" "packetevents" "geyser-recipe-fix" "geyserextras" "interactionvisualizer" "holomobhealth")
+projects=("simple-voice-chat" "worldedit" "chunky" "pl3xmap" "luckperms" "packstacker" "knockbacksync" "packetevents" "geyser-recipe-fix" "geyserextras" "interactionvisualizer" "holomobhealth")
 loaders=("paper" "paper" "paper" "paper" "paper" "paper" "paper" "paper" "paper" "paper" "paper" "paper" "paper")
 
 # Delete all plugins to download fresh ones
