@@ -1,18 +1,28 @@
 #!/bin/bash
+set -e  # Exit on any error
 
-# Retrieve the secret from Hugging Face Spaces environment variables
-SECRET_KEY="${PLAYIT_SECRET}"
+# Check if PLAYIT_SECRET is set
+if [[ -z "$PLAYIT_SECRET" ]]; then
+    echo "Error: PLAYIT_SECRET is not set. Make sure it's defined in HF Spaces secrets."
+    exit 1
+fi
 
-# Check if the playit binary exists and remove it if it does
-if [ -f "playit-linux-amd64" ]; then
+# Remove existing binary if it exists
+if [[ -f "playit-linux-amd64" ]]; then
+    echo "Removing old playit binary..."
     rm playit-linux-amd64
 fi
 
-# Download the latest playit binary
-wget -q https://github.com/playit-cloud/playit-agent/releases/latest/download/playit-linux-amd64
+# Download the latest Playit binary
+echo "Downloading Playit agent..."
+wget -q --show-progress https://github.com/playit-cloud/playit-agent/releases/latest/download/playit-linux-amd64 || {
+    echo "Download failed!"
+    exit 1
+}
 
 # Make it executable
 chmod +x playit-linux-amd64
 
 # Run the Playit agent with the secret key
-./playit-linux-amd64 --platform_linux --secret "$SECRET_KEY"
+echo "Starting Playit agent..."
+exec ./playit-linux-amd64 --platform_linux --secret "$PLAYIT_SECRET"
