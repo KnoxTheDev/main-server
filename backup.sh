@@ -5,15 +5,19 @@ OVERWORLD="Knoxius SMP"
 NETHER="Knoxius SMP_nether"
 END="Knoxius SMP_the_end"
 
-# Define Hugging Face dataset repository
-HF_DATASET_REPO="https://knoxius:${HF_TOKEN}@huggingface.co/datasets/knoxius/primary"
+# Define Hugging Face credentials
+HF_USERNAME="knoxius"
+HF_DATASET="primary"
+
+# Define Hugging Face dataset repository URL using the token
+HF_REPO="https://${HF_USERNAME}:${HF_TOKEN}@huggingface.co/datasets/${HF_USERNAME}/${HF_DATASET}"
 
 # Archive the worlds into worlds.zip
 zip -r worlds.zip "$OVERWORLD" "$NETHER" "$END"
 
 # Clone or update the dataset repository
 if [ ! -d "backup-repo/.git" ]; then
-    git clone "$HF_DATASET_REPO" backup-repo
+    git clone "$HF_REPO" backup-repo
 else
     cd backup-repo || exit 1
     git pull origin main
