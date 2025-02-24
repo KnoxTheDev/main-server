@@ -34,9 +34,12 @@ cd backup-repo || exit 1
 git config --global user.email "backup-bot@server.com"
 git config --global user.name "Backup Bot"
 
+# Enable LFS for worlds.zip
+git lfs track "worlds.zip"
+
 # Add and commit the backup
-git add worlds.zip
+git add .gitattributes worlds.zip
 git commit -m "Automated backup: $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit."
 
-# Push to the repository
+# Push to the repository using LFS
 git push origin main
