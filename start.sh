@@ -20,7 +20,7 @@ java -Xms1G -Xmx12G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMilli
      -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 \
      -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem \
      -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs \
-     -Daikars.new.flags=true -jar server.jar nogui
+     -Daikars.new.flags=true -DGeyserSkinManager.ForceShowSkins=true -jar server.jar nogui
 
 # Backup
 bash backup.sh
