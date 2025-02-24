@@ -5,19 +5,15 @@ OVERWORLD="Knoxius SMP"
 NETHER="Knoxius SMP_nether"
 END="Knoxius SMP_the_end"
 
-# Define GitHub credentials
-GITHUB_USERNAME="KnoxTheDev"
-GITHUB_REPO="main-server"
-
-# Define GitHub repository URL using the token
-ORIGIN="https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/${GITHUB_USERNAME}/${GITHUB_REPO}.git"
+# Define Hugging Face dataset repository
+HF_DATASET_REPO="https://knoxius:${HF_TOKEN}@huggingface.co/datasets/knoxius/primary"
 
 # Archive the worlds into worlds.zip
 zip -r worlds.zip "$OVERWORLD" "$NETHER" "$END"
 
-# Clone or update the repository
+# Clone or update the dataset repository
 if [ ! -d "backup-repo/.git" ]; then
-    git clone "$ORIGIN" backup-repo
+    git clone "$HF_DATASET_REPO" backup-repo
 else
     cd backup-repo || exit 1
     git pull origin main
@@ -33,13 +29,11 @@ cd backup-repo || exit 1
 # Configure Git
 git config --global user.email "backup-bot@server.com"
 git config --global user.name "Backup Bot"
-
-# Enable LFS for worlds.zip
-git lfs track "worlds.zip"
+git config --global pull.rebase true  # Enable rebase for git pull
 
 # Add and commit the backup
-git add .gitattributes worlds.zip
+git add worlds.zip
 git commit -m "Automated backup: $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit."
 
-# Push to the repository using LFS
+# Push to the Hugging Face dataset repository
 git push origin main
