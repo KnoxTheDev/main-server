@@ -10,7 +10,7 @@ HF_USERNAME="knoxius"
 HF_DATASET="primary"
 
 # Hugging Face repository URL with authentication
-HF_ORIGIN="https:/${HF_USERNAME}:${HF_TOKEN}@huggingface.co/datasets/${HF_USERNAME}/${HF_DATASET}.git"
+HF_ORIGIN="https://${HF_USERNAME}:${HF_TOKEN}@huggingface.co/datasets/${HF_USERNAME}/${HF_DATASET}.git"
 
 # Archive the worlds into worlds.zip
 zip -r worlds.zip "$OVERWORLD" "$NETHER" "$END"
